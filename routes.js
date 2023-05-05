@@ -7,7 +7,8 @@ const routes = express.Router();
 routes.route("/games")
     .get(gameController.getAll);
 
-routes.route("/games/:gameIndex")
-    .get(gameController.getGame);
+routes.route("/games/:id")
+    .get(gameController.getGame)
+    .delete(gameController.deleteGame);
 
 module.exports = routes;
