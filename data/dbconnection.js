@@ -5,11 +5,13 @@ let _connection = null;
 
 const open = function() {
     if (get() == null) {
-        MongoClient.connect(process.env.DB_CONNECTION_URL).then(function(client) {
-            _connection = client.db(process.env.DB_NAME);
-            console.log("DB connected");
-        }).catch(function(err) {
-            console.log("Connect failed", err);
+        MongoClient.connect(process.env.DB_CONNECTION_URL, function(err, client) {
+            if (err) {
+                console.log("Connect error: ", err);
+            } else {
+                _connection = client.db(process.env.DB_NAME);
+                console.log("Connected");
+            }
         });
     } 
 }
