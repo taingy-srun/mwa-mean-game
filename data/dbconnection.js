@@ -1,11 +1,16 @@
 require("dotenv").config();
 const MongoClient = require("mongodb").MongoClient;
+const callbackify = require("util").callbackify;
 
 let _connection = null;
 
+const mongoConnectWithCallback = callbackify(function(url) {
+    return MongoClient.connect(url);
+});
+
 const open = function() {
     if (get() == null) {
-        MongoClient.connect(process.env.DB_CONNECTION_URL, function(err, client) {
+        mongoConnectWithCallback(process.env.DB_CONNECTION_URL, function(err, client) {
             if (err) {
                 console.log("Connect error: ", err);
             } else {

@@ -1,6 +1,7 @@
 require("dotenv").config();
 const dbConnection = require("../data/dbconnection");
 const { ObjectId } = require("mongodb");
+const callbackify = require("util").callbackify;
 
 module.exports.getAll = function(req, res) {
     console.log("GET all games received");
@@ -19,7 +20,11 @@ module.exports.getAll = function(req, res) {
     const db = dbConnection.get();
     const gameCollection = db.collection("games");
    
-    gameCollection.find().skip(offset).limit(count).toArray(function(err, games){
+    const findWithCallback = callbackify(function() {
+        return gameCollection.find().skip(offset).limit(count).toArray();
+    });
+
+    findWithCallback(function(err, games){
         if (err) {
             console.log("Get games err:", err);
             res.status(parseInt(process.env.RESPONSE_HTTP_SERVER_ERROR));
@@ -38,7 +43,11 @@ module.exports.getGame = function(req, res) {
     const gameCollection = db.collection("games");
    
     const id = req.params.id;
-    gameCollection.find({_id: ObjectId(id)}).toArray(function(err, games){
+
+    const findWithCallback = callbackify(function() {
+        return gameCollection.find({_id: new ObjectId(id)}).toArray();
+    });
+    findWithCallback(function(err, games){
         if (err) {
             console.log("Get one game err:", err);
             res.status(parseInt(process.env.RESPONSE_HTTP_SERVER_ERROR));
@@ -56,7 +65,11 @@ module.exports.deleteGame = function(req, res) {
     const gameCollection = db.collection("games");
    
     const id = req.params.id;
-    gameCollection.deleteOne({_id: ObjectId(`${id}`)}, function(err, game){
+    const deleteWithCallback = callbackify(function() {
+        return gameCollection.deleteOne({_id: new ObjectId(id)});
+    });
+
+    deleteWithCallback(function(err, game){
         if (err) {
             console.log("delete game err:", err);
             res.status(parseInt(process.env.RESPONSE_HTTP_SERVER_ERROR));
@@ -122,8 +135,11 @@ module.exports.addGame = function(req, res) {
 
     const db = dbConnection.get();
     const gameCollection = db.collection("games");
-   
-    gameCollection.insertOne({"title": title, "price": price, "minPlayer": minPlayer, "maxPlayer": maxPlayer, "minAge": minAge}, function(err, game){
+    const postWithCallback = callbackify(function() {
+        return gameCollection.insertOne({"title": title, "price": price, "minPlayer": minPlayer, "maxPlayer": maxPlayer, "minAge": minAge});
+    });
+
+    postWithCallback(function(err, game){
         if (err) {
             console.log("Get games err:", err);
             res.status(parseInt(process.env.RESPONSE_HTTP_SERVER_ERROR));
