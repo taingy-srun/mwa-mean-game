@@ -6,6 +6,8 @@ require("dotenv").config();
 const routes = require("./routes");
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 const server = app.listen(process.env.PORT, function() {
     console.log("Listening to port", server.address().port);
