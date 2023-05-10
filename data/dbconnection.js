@@ -1,31 +1,17 @@
 require("dotenv").config();
-const MongoClient = require("mongodb").MongoClient;
-const callbackify = require("util").callbackify;
+const mongoose = require("mongoose");
+require("../models/game.model");
 
-let _connection = null;
+mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
-const mongoConnectWithCallback = callbackify(function(url) {
-    return MongoClient.connect(url);
+mongoose.connection.on(process.env.DB_ON_CONNECTED, function() {
+    console.log(process.env.DB_ON_CONNECTED_MESSAGE, process.env.DB_NAME);
 });
 
-const open = function() {
-    if (get() == null) {
-        mongoConnectWithCallback(process.env.DB_CONNECTION_URL, function(err, client) {
-            if (err) {
-                console.log("Connect error: ", err);
-            } else {
-                _connection = client.db(process.env.DB_NAME);
-                console.log("Connected");
-            }
-        });
-    } 
-}
+mongoose.connection.on(process.env.DB_ON_DISCONNECTED, function() {
+    console.log(process.env.DB_ON_DISCONNECTED_MESSAGE, process.env.DB_NAME);
+});
 
-const get = function() {
-    return _connection;
-}
-
-module.exports = {
-    open,
-    get
-}
+mongoose.connection.on(process.env.DB_ON_ERROR, function() {
+    console.log(process.env.DB_ON_ERROR_MESSAGE, process.env.DB_NAME);
+});
