@@ -1,3 +1,3 @@
 # mwa-mean-game
 
-This is repository for assignment Day03, MEAN game.
+This is my MEAN game project for MWA course.
