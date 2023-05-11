@@ -1,6 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-require("../models/game.model");
+require("./models/game.model");
 
 mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 

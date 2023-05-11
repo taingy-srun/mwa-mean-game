@@ -1,9 +1,9 @@
 require("dotenv").config();
-require("./data/dbconnection");
+require("./api/data/dbconnection");
 const express = require("express");
 const path = require("path");
 
-const routes = require("./routes");
+const routes = require("./api/routes/routes");
 
 const app = express();
 app.use(express.json());
@@ -18,6 +18,8 @@ app.use(function(req, res, next) {
     next();
 })
 
+app.use("/api", function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+    next();
+})
 app.use("/api", routes);
-
-app.use(express.static(path.join(__dirname, "public")));
