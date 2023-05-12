@@ -12,6 +12,7 @@ import { GamesComponent } from './games/games.component';
 import { GameComponent } from './game/game.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { AppRoute } from './app.route';
+import { RatingStarComponent } from './rating-star/rating-star.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AppRoute } from './app.route';
     HeaderComponent,
     GamesComponent,
     GameComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    RatingStarComponent
   ],
   imports: [
     BrowserModule,

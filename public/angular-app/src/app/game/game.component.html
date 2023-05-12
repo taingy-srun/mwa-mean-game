@@ -1,7 +1,11 @@
-<h1>{{ game.title }}</h1>
+<h1>{{ game.title }} - <app-rating-star [rating]="game.rate"></app-rating-star></h1>
 Year: {{ game.year }} <br/>
 Minimum Players: {{ game.minPlayers }} <br/>
 Maximun Players: {{ game.maxPlayers }} <br/>
 Minimum Age: {{ game.minAge }} <br/>
-Rate: {{ game.rate }} <br/>
 Price: {{ game.price | currency }} <br/>
+
+<br/>
+<br/>
+<button (click)="update(game._id)">Edit</button>
+<button (click)="delete(game._id)">Delete</button>

@@ -27,4 +27,22 @@ export class GameComponent implements OnInit {
         }
     });
   }
+
+  public delete(_id: string) {
+    this._gameService.deleteOne(_id).subscribe({
+      next: (game) => {
+        this.game = game;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log("On complete");
+      }
+    });
+  }
+
+  public update(_id: string) {
+    
+  }
 }

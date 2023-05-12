@@ -18,4 +18,8 @@ export class GamesDataService {
   public getOne(_id: string): Observable<Game> {
     return this._http.get<Game>(this._baseUrl + "/" + _id);
   }
+
+  public deleteOne(_id: string): Observable<Game> {
+    return this._http.delete<Game>(this._baseUrl + "/" + _id);
+  }
 }
