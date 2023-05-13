@@ -1,20 +1,17 @@
-const express = require("express");
+const routes = require("express").Router();
 const gameController = require("../controllers/games.controller");
 
-const routes = express.Router();
-
-
-routes.route("/games")
+routes.route("/")
     .get(gameController.getAll)
     .post(gameController.addOne);
 
-routes.route("/games/:id")
+routes.route("/:id")
     .get(gameController.getOne)
     .put(gameController.fullUpdateOne)
     .patch(gameController.partialUpdateOne)
     .delete(gameController.deleteOne);
 
-routes.route("/games/:id/publisher")
+routes.route("/:id/publisher")
     .get(gameController.getPublisher)
     .post(gameController.addPublisher)
     .put(gameController.fullUpdatePublisher)

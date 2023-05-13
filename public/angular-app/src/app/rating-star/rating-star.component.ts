@@ -16,7 +16,9 @@ export class RatingStarComponent {
   maxRating = 5;
 
   ngOnChanges(changes: SimpleChange) {
-    this.ratedStars = new Array<number>(this.rating);
-    this.unRatedStars = new Array<number>(this.maxRating - this.rating);
+    if (this.rating) {
+      this.ratedStars = new Array<number>(this.rating);
+      this.unRatedStars = new Array<number>(this.maxRating - this.rating);
+    }
   }
 }

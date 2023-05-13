@@ -2,7 +2,7 @@ require("dotenv").config();
 require("./api/data/dbconnection");
 const express = require("express");
 
-const routes = require("./api/routes/routes");
+const routes = require("./api/routes");
 
 const app = express();
 app.use(express.json());
@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
 
 app.use("/api", function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-    res.header("Access-Control-Allow-Methods", "*");
+    res.header("Access-Control-Allow-Methods", "GET, DELETE");
     next();
 })
 app.use("/api", routes);

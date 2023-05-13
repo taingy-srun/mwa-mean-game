@@ -22,4 +22,12 @@ export class GamesDataService {
   public deleteOne(_id: string): Observable<Game> {
     return this._http.delete<Game>(this._baseUrl + "/" + _id);
   }
+
+  // public updateOne(_id: string): {
+   
+  // }
+
+  public getByPage(offset: number, count: number): Observable<Game[]> {
+    return this._http.get<Game[]>(this._baseUrl + "?offset=" + offset + "&count=" + count);
+  }
 }

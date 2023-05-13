@@ -9,7 +9,7 @@ const _sendResponse = function(res, status_code, message) {
 }
 
 const _findWithCallback = callbackify(function(offset, count) {
-    return Game.find().skip(offset).limit(count).exec();
+    return Game.find().skip(offset).limit(count).sort({title: 1}).exec();
 });
 
 const getAll = function(req, res) {

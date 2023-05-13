@@ -13,6 +13,9 @@ import { GameComponent } from './game/game.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { AppRoute } from './app.route';
 import { RatingStarComponent } from './rating-star/rating-star.component';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +27,16 @@ import { RatingStarComponent } from './rating-star/rating-star.component';
     GamesComponent,
     GameComponent,
     ErrorPageComponent,
-    RatingStarComponent
+    RatingStarComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(AppRoute),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

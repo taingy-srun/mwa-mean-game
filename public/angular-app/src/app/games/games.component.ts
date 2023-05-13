@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChange } from '@angular/core';
 import { GamesDataService } from '../games-data.service';
 
 
@@ -68,20 +68,81 @@ export class Game {
 export class GamesComponent implements OnInit{
 
   games!: Game[];
+  offset: number = 0;
+  count: number = 5;
 
   constructor(private _gameService: GamesDataService) {}
 
   ngOnInit(): void {
-    this._gameService.getAll().subscribe({
-        next: (games) => {
-          this.games = games;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log("On complete");
-        }
+    this.getGames();
+  }
+
+  private _delete(id: string) {
+    this._gameService.deleteOne(id).subscribe({
+      next: (game) => {
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log("On complete");
+      }
     });
+  }
+
+  public delete(id: string) {
+    this._delete(id);
+  }
+
+  private getGames() {
+    this._gameService.getByPage(this.offset, this.count).subscribe({
+      next: (games) => {
+        this.games = games;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log("On complete");
+      }
+    });
+  }
+
+  public getNextPage() {
+    this.setNextPageValue();
+    this.getGames();
+  }
+
+  public getPreviousPage() {
+    this.setPreviousPageValue();
+    this.getGames();
+  }
+
+  private setNextPageValue() {
+    this.offset += this.count;
+  }
+
+  private setPreviousPageValue() {   
+    if (this.offset > 0) {
+      this.offset -= this.count;
+    } else {
+      this.offset = 0;
+    }
+
+    if (this.offset < 0) {
+      this.offset = 0;
+    }
+  }
+
+  public disablePreviousButton():boolean {
+      return this.offset == 0;
+  }
+
+  public disableNextButton():boolean {
+    if (!this.games) {
+      return false;
+    }
+    return this.games.length < 5;
   }
 }

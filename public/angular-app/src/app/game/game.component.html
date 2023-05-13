@@ -7,5 +7,6 @@ Price: {{ game.price | currency }} <br/>
 
 <br/>
 <br/>
-<button (click)="update(game._id)">Edit</button>
-<button (click)="delete(game._id)">Delete</button>
+<button routerLink="/games"> < Back</button>
+<button (click)="update()">Edit</button>
+<button (click)="delete()">Delete</button>
